@@ -32,7 +32,7 @@ public class PlaceController {
          * 실제 구현은 아래와 같이 한다. 얘는 별도의 서비스 로직을 만들 필요가 없다.
          * List<Long> ids = aiService.getRecommendedPlaceIds(request.getQuery(), request.getLanguageCode());
          *
-         *     // 핵심 로직 위임
+         *     핵심 로직 위임
          *     return placeService.getPlacesByIds(ids, request.getLanguageCode());
          */
 

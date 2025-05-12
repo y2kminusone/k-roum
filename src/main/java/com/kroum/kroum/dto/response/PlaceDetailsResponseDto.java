@@ -26,5 +26,5 @@ public class PlaceDetailsResponseDto {
     private int bookmarkCount;
 
     @Schema(description = "찜 여부, 로그인 유저 한정", example = "true")
-    private boolean isBookmarked;
+    private boolean bookmarked;
 }
