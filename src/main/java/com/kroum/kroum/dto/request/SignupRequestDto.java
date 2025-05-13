@@ -10,7 +10,7 @@ import lombok.Setter;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-@Schema(description = "회원가입 요청 DTO")
+@Schema(name = "A_SignupRequestDto", description = "회원가입 요청 DTO")
 public class SignupRequestDto {
 
     @Schema(description = "아이디", example = "id123")

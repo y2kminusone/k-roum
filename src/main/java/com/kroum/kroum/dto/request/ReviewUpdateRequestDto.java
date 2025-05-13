@@ -10,7 +10,7 @@ import lombok.Setter;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-@Schema(description = "리뷰 수정 요청 DTO")
+@Schema(name = "A_ReviewUpdateRequestDto", description = "리뷰 수정 요청 DTO")
 public class ReviewUpdateRequestDto {
 
     @Schema(description = "수정할 별점, 1 ~ 5", example = "1")

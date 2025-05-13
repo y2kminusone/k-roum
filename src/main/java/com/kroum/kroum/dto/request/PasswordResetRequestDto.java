@@ -10,7 +10,7 @@ import lombok.Setter;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-@Schema(description = "비밀번호 초기화 요청 DTO")
+@Schema(name = "A_PasswordResetRequestDto", description = "비밀번호 초기화 요청 DTO")
 public class PasswordResetRequestDto {
 
     // 아이디와 이메일을 알려주면 리셋한 임시 비밀번호를 이메일로 보내준다

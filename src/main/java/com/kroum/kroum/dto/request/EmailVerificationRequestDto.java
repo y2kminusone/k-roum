@@ -10,7 +10,7 @@ import lombok.Setter;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-@Schema(description = "이메일 인증 요청 DTO")
+@Schema(name = "A_EmailVerificationRequestDto", description = "이메일 인증 요청 DTO")
 public class EmailVerificationRequestDto {
 
     @Schema(description = "인증 받을 이메일", example = "user123@naver.com")

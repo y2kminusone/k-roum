@@ -10,7 +10,7 @@ import lombok.Setter;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-@Schema(description = "프로필 수정 요청 DTO")
+@Schema(name = "A_ProfileUpdateRequestDto", description = "프로필 수정 요청 DTO")
 public class ProfileUpdateRequestDto {
     // 이메일 변경 기능은 제외하는 걸로
 

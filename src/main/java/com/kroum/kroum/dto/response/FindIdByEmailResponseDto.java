@@ -10,9 +10,9 @@ import lombok.Setter;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-@Schema(name = "B_AvailabilityResponseDto", description = "중복 확인 응답 DTO(이메일, 닉네임, 로그인ID)")
-public class AvailabilityResponseDto {
+@Schema(name = "B_FindIdByEmailResponseDto", description = "아이디 찾기 요청 응답 DTO")
+public class FindIdByEmailResponseDto {
 
-    @Schema(description = "사용 가능 여부", example = "true")
-    private boolean available;
+    @Schema(description = "로그인 ID", example = "loginId123")
+    private String loginId;
 }

@@ -10,7 +10,7 @@ import lombok.Setter;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-@Schema(description = "특정 관광지 상세 정보 요청 반환 dto")
+@Schema(name = "B_PlaceDetailsResponseDto", description = "특정 관광지 상세 정보 요청 반환 dto")
 public class PlaceDetailsResponseDto {
     // 기본 정보 넘겨 준거는 캐시로 프론트단에서 들고 있고 백엔드단에서는 필요한 정보만 추가로 넘겨준다
     // 만약 다 넘겨 줄시에는 속도에서 오버헤드 난다!

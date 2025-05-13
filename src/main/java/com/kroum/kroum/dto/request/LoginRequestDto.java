@@ -10,7 +10,7 @@ import lombok.Setter;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-@Schema(description = "로그인 요청 DTO")
+@Schema(name = "A_LoginRequestDto", description = "로그인 요청 DTO")
 public class LoginRequestDto {
 
     @Schema(description = "유저 email", example = "abc123@naver.com")

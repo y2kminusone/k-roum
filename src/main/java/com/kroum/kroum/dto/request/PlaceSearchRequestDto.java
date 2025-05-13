@@ -8,7 +8,7 @@ import lombok.Setter;
 @Getter
 @Setter
 @NoArgsConstructor
-@Schema(description = "장소 검색 요청 DTO")
+@Schema(name = "A_PlaceSearchRequestDto", description = "장소 검색 요청 DTO")
 public class PlaceSearchRequestDto {
 
     @Schema(description = "검색 문장 쿼리", example = "서울의 떡볶이 맛집을 추천해줘")

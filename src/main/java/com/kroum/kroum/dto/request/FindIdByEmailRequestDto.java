@@ -10,7 +10,7 @@ import lombok.Setter;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-@Schema(description = "이메일 기반 아이디 찾기 요청 DTO")
+@Schema(name ="A_FindIdByEmailRequestDto", description = "이메일 기반 아이디 찾기 요청 DTO")
 public class FindIdByEmailRequestDto {
 
     // 이메일만 넘겨주면 이메일이 unique하므로 DB에서 아이디를 찾아올 수 있다

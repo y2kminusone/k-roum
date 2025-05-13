@@ -10,7 +10,7 @@ import lombok.Setter;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-@Schema(description = "공통 응답 DTO")
+@Schema(name = "B_ApiResponseDto", description = "공통 응답 DTO")
 public class ApiResponseDto {
 
     @Schema(description = "요청 성공 여부", example = "true")

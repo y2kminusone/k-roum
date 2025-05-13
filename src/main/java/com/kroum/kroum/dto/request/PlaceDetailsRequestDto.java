@@ -8,7 +8,7 @@ import lombok.Setter;
 @Getter
 @Setter
 @NoArgsConstructor
-@Schema(description = "특정 관광지 상세 정보 요청 dto이나 필요할 것 같지 않다. requestParam으로 받아서 처리 예정")
+@Schema(name = "A_PlaceDetailsRequestDto", description = "특정 관광지 상세 정보 요청 dto이나 필요할 것 같지 않다. requestParam으로 받아서 처리 예정")
 public class PlaceDetailsRequestDto {
 
     @Schema(description = "장소 id", example = "123")

@@ -12,7 +12,7 @@ import java.util.List;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-@Schema(description = "마이페이지 통합 응답 DTO")
+@Schema(name = "B_MyPageResponseDto", description = "마이페이지 통합 응답 DTO")
 public class MyPageResponseDto {
 
     @Schema(description = "유저 프로필 정보")

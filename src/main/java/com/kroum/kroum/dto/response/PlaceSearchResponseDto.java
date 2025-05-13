@@ -12,7 +12,7 @@ import java.util.List;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-@Schema(description = "검색 결과 반환 DTO")
+@Schema(name = "B_PlaceSearchResponseDto", description = "검색 결과 반환 DTO")
 public class PlaceSearchResponseDto {
 
     @Schema(description = "위도", example = "37.5665")

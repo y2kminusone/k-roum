@@ -10,7 +10,7 @@ import lombok.Setter;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-@Schema(description = "비밀번호 변경 요청 DTO")
+@Schema(name = "A_PasswordChangeRequestDto", description = "비밀번호 변경 요청 DTO")
 public class PasswordChangeRequestDto {
 
     @Schema(description = "기존 비밀번호", example = "currentPassword123")

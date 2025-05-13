@@ -10,7 +10,7 @@ import lombok.Setter;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-@Schema(description = "마이페이지용 리뷰 요약 DTO")
+@Schema(name = "B_ReviewSummaryResponseDto", description = "마이페이지용 리뷰 요약 DTO")
 public class ReviewSummaryResponseDto {
 
     @Schema(description = "장소 ID", example = "123")

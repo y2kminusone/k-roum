@@ -10,7 +10,7 @@ import lombok.Setter;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-@Schema(description = "북마크 응답 DTO")
+@Schema(name = "B_BookmarkResponseDto", description = "북마크 응답 DTO")
 public class BookmarkResponseDto {
 
     @Schema(description = "장소 ID", example = "123")
