@@ -46,7 +46,7 @@ public class BookmarkController {
         return ResponseEntity.ok(new ApiResponseDto(true, "찜 목록에서 삭제되었습니다."));
     }
 
-    @Operation(summary = "찜 삭제", description = "찜이 된 버튼을 누르면 찜이 삭제됨")
+    @Operation(summary = "요약된 찜 목록 가져오기", description = "마이페이지를 누를 떄 내부 API로 사용")
     @ApiResponses({
             @ApiResponse(responseCode = "200", description = "정상적으로 찜 목록이 호출됨",
                     content = @Content(array = @ArraySchema(schema = @Schema(implementation = BookmarkResponseDto.class)))), // 이거 ArraySchema 리턴 하도록
@@ -60,14 +60,4 @@ public class BookmarkController {
                 new BookmarkResponseDto(456L, "경복궁", "2025-05-12", "https://cdn.kroum.com/places/gyungbok.jpg"));
         return ResponseEntity.ok(bookmarkResponseDto);
     }
-
-
-
-
-
-
-
-
-
-
 }

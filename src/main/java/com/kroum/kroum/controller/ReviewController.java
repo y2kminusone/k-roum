@@ -87,6 +87,7 @@ public class ReviewController {
     public ResponseEntity<List<ReviewDetailResponseDto>> getReviewsByPlaceId(@RequestParam Long placeId) {
 
         // 서비스 미구현: mock 데이터로 대체
+        // 같은 장소에 대한 리뷰들을 가져오는 것임
         List<ReviewDetailResponseDto> response = List.of(
                 new ReviewDetailResponseDto(
                         "경복궁",
@@ -119,7 +120,7 @@ public class ReviewController {
             @ApiResponse(responseCode = "500", description = "서버 오류")
     })
     @GetMapping("/summary")
-    public ResponseEntity<List<ReviewSummaryResponseDto>> getReviewsByUserId(@RequestParam Long placeId) {
+    public ResponseEntity<List<ReviewSummaryResponseDto>> getSummaryReviews(HttpSession session) {
         // 서비스 미구현: mock 데이터로 대체
         List<ReviewSummaryResponseDto> myReviews = List.of(
                 new ReviewSummaryResponseDto(
@@ -139,6 +140,33 @@ public class ReviewController {
         return ResponseEntity.ok(myReviews);
     }
 
-    // 일단 전체 내 리뷰 조회 왜 있는지 모르겠어서 냅두자
+    @Operation(summary = "마이페이지에서 내가 작성한 리뷰 상세 조회", description = "리뷰 목록 버튼을 누르면 호출.")
+    @ApiResponses({
+            @ApiResponse(responseCode = "200", description = "내 상세 리뷰 목록 호출 성공",
+                    content = @Content(array = @ArraySchema(schema = @Schema(implementation = ReviewDetailResponseDto.class)))),
+            // @ApiResponse(responseCode = "401", description = "마이페이지 접근 불가 - 로그인이 필요함"),
+            @ApiResponse(responseCode = "500", description = "서버 오류")
+    })
+    @GetMapping
+    public ResponseEntity<List<ReviewDetailResponseDto>> getDetailReviews(HttpSession session) {
+        // 서비스 미구현: mock 데이터로 대체
+        List<ReviewDetailResponseDto> myDetailReviews = List.of(
+                new ReviewDetailResponseDto(
+                        "경복궁",
+                        4.5,
+                        "역사적인 분위기에서 산책하기 너무 좋아요.",
+                        "2025-05-12",
+                        "https://cdn.kroum.com/places/gyungbok.jpg"
+                ),
+                new ReviewDetailResponseDto(
+                        "우리집",
+                        4.0,
+                        "진짜 편해요!",
+                        "2025-05-11",
+                        "https://cdn.kroum.com/places/gyungbok.jpg"
+                )
+        );
 
+        return ResponseEntity.ok(myDetailReviews);
+    }
 }
