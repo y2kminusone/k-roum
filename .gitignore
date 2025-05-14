@@ -26,26 +26,8 @@ replay_pid*
 # macOS
 .DS_Store
 
-# IntelliJ
-.idea/
-*.iml
-*.ipr
-*.iws
-out/
-
 # VSCode
 .vscode/
-
-# Gradle
-.gradle/
-build/
-
-# Spring Boot DevTools
-.spring-boot-devtools.properties
-
-# Database
-*.mv.db
-*.h2.db
 
 # Environment
 .env
