@@ -147,7 +147,7 @@ public class ReviewController {
             // @ApiResponse(responseCode = "401", description = "마이페이지 접근 불가 - 로그인이 필요함"),
             @ApiResponse(responseCode = "500", description = "서버 오류")
     })
-    @GetMapping
+    @GetMapping("/detail")
     public ResponseEntity<List<ReviewDetailResponseDto>> getDetailReviews(HttpSession session) {
         // 서비스 미구현: mock 데이터로 대체
         List<ReviewDetailResponseDto> myDetailReviews = List.of(
