@@ -1,12 +1,50 @@
 import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 
 const SearchSection = () => {
   const [searchQuery, setSearchQuery] = useState('');
+  const [languageCode, setLanguageCode] = useState('KO'); 
+  const navigate = useNavigate();
 
-  const handleSearch = (e) => {
+  const handleSearch = async (e) => {
     e.preventDefault();
-    console.log('Searching for:', searchQuery);
-    // Implement search functionality here
+
+    if (!searchQuery.trim()) {
+      alert('검색어를 입력해주세요.');
+            console.log('sksksk');
+      return;
+    }
+
+    try {
+      console.log('sksksk');
+      const response = await fetch('http://localhost:8080/places/search', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          accept: '*/*',
+        },
+        body: JSON.stringify({
+          query: searchQuery,
+          languageCode: languageCode,
+        }),
+      });
+console.log('나나나나');
+      if (!response.ok) {
+        throw new Error(`서버 오류: ${response.status}`);
+      }
+
+      const data = await response.json();
+console.log("다다다다");
+      console.log('Response:', response);
+      console.log('Data:', data);
+
+      navigate('/results', {
+        state: { query: searchQuery, results: data },
+      });
+    } catch (error) {
+      console.error('검색 중 오류 발생:', error);
+      alert('검색에 실패했습니다.');
+    }
   };
 
   return (
@@ -15,10 +53,7 @@ const SearchSection = () => {
         <form onSubmit={handleSearch} className="w-full">
           <div className="flex items-center h-[80px] w-full bg-white rounded-[40px] shadow-[0px_4px_30px_rgba(0,0,0,0.25)]">
             <div className="flex items-center pl-6">
-              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <path d="M11 19C15.4183 19 19 15.4183 19 11C19 6.58172 15.4183 3 11 3C6.58172 3 3 6.58172 3 11C3 15.4183 6.58172 19 11 19Z" stroke="#919191" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
-                <path d="M21 21L16.65 16.65" stroke="#919191" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
-              </svg>
+              {/* 돋보기 아이콘 여기에 넣기 */}
             </div>
             <input
               type="text"
