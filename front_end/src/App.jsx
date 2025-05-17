@@ -1,14 +1,14 @@
 // App.jsx (또는 App.tsx)
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import SearchSection from './SearchSection';
-import ResultPage from './ResultPage'; 
+import SearchPage from './pages/Home/SearchPage';
 
 function App() {
   return (
     <Router>
       <Routes>
         <Route path="/" element={<SearchSection />} />
-        <Route path="/results" element={<ResultPage />} />
+        <Route path="/searchPage" element={<SearchPage />} />
       </Routes>
     </Router>
   );
