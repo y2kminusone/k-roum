@@ -1,8 +1,8 @@
 import React from 'react';
 import Header from '../../components/common/Header';
-import SearchSection from './SearchSection';
-import TrendingHashtags from './TrendingHashtags';
-import FeaturedContent from './FeaturedContent';
+import SearchSection from '../../components/ui/homePage/SearchSection';
+import TrendingHashtags from '../../components/ui/homePage/TrendingHashtags';
+import FeaturedContent from '../../components/ui/homePage/FeaturedContent';
 
 const HomePage = () => {
   return (

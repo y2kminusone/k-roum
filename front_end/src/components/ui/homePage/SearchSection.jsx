@@ -11,12 +11,10 @@ const SearchSection = () => {
 
     if (!searchQuery.trim()) {
       alert('검색어를 입력해주세요.');
-            console.log('sksksk');
       return;
     }
 
     try {
-      console.log('sksksk');
       const response = await fetch('http://localhost:8080/places/search', {
         method: 'POST',
         headers: {
@@ -28,17 +26,17 @@ const SearchSection = () => {
           languageCode: languageCode,
         }),
       });
-console.log('나나나나');
+
       if (!response.ok) {
         throw new Error(`서버 오류: ${response.status}`);
       }
 
       const data = await response.json();
-console.log("다다다다");
+
       console.log('Response:', response);
       console.log('Data:', data);
 
-      navigate('/results', {
+      navigate('/searchPage', {
         state: { query: searchQuery, results: data },
       });
     } catch (error) {
