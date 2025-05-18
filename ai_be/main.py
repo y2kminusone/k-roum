@@ -41,7 +41,7 @@ llm = ChatGoogleGenerativeAI(
 def get_retriever(language_code):
     persist_directory = DB_DIRECTORIES.get(language_code, "database/kr_database")
     vector_store = Chroma(persist_directory=persist_directory, embedding_function=us_model)
-    return vector_store.as_retriever(search_type="mmr", search_kwargs={"k": 100, "fetch_k": 300, "lambda": 0.1})
+    return vector_store.as_retriever(search_type="mmr", search_kwargs={"k": 50, "fetch_k": 100, "lambda": 0.1})
 
 
 def llm_filter(query, pages):
