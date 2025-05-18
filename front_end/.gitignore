@@ -1,16 +1,5 @@
-# Compiled class file
+# --- Java 관련 무시 항목 (백엔드 개발용) ---
 *.class
-
-# Log file
-*.log
-
-# BlueJ files
-*.ctxt
-
-# Mobile Tools for Java (J2ME)
-.mtj.tmp/
-
-# Package Files #
 *.jar
 *.war
 *.nar
@@ -19,6 +8,37 @@
 *.tar.gz
 *.rar
 
-# virtual machine crash logs, see http://www.java.com/en/download/help/error_hotspot.xml
+# Java 도구
+.mtj.tmp/
+
+# Java 에러 로그
 hs_err_pid*
 replay_pid*
+
+# 로그 파일
+*.log
+
+# --- Node.js / React / Tailwind CSS 관련 무시 항목 ---
+
+# 의존성 폴더
+/node_modules
+/.pnp
+.pnp.js
+
+# 테스트 커버리지 결과
+/coverage
+
+# 프로덕션 빌드 결과
+/build
+
+# 환경변수 파일 (보안 중요)
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
+
+# 기타 무시할 파일
+.DS_Store
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
