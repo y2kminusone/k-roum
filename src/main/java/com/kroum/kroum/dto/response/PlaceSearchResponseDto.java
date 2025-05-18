@@ -24,8 +24,8 @@ public class PlaceSearchResponseDto {
     @Schema(description = "대표 이미지 URL", example = "https://cdn.kroum.com/places/gyungbok.jpg")
     private String firstImageUrl;
 
-    @Schema(description = "추가 이미지 리스트", example = "[\"https://.../1.jpg\", \"https://.../2.jpg\"]")
-    private List<String> imageUrls;
+   /* @Schema(description = "추가 이미지 리스트", example = "[\"https://.../1.jpg\", \"https://.../2.jpg\"]")
+    private List<String> imageUrls;*/
 
     @Schema(description = "장소 이름", example = "경복궁")
     private String placeName;
