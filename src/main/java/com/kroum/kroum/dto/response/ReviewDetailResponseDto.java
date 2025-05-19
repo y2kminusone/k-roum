@@ -16,8 +16,8 @@ public class ReviewDetailResponseDto {
     @Schema(description = "장소 이름", example = "경복궁")
     private String placeName;
 
-    @Schema(description = "리뷰 평점", example = "3")
-    private int averageRating;
+    @Schema(description = "리뷰 평점", example = "4.5")
+    private double averageRating;
 
     @Schema(description = "리뷰 내용", example = "너무너무 맛있었어요~!! 매운 맛에 기절할 뻔...")
     private String content;

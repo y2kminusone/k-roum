@@ -1,25 +1,17 @@
-import React from 'react';
-import { BrowserRouter } from 'react-router-dom';
-import Header from './components/Header/header.jsx';  // 헤더 경로 확인
-import Router from './routes/Router';             // 라우팅 컴포넌트
-
-const App = () => {
-  return (
-    <BrowserRouter>
-      <Header />     {/* 항상 상단에 표시될 헤더 */}
-      <Router />     {/* 페이지에 따라 바뀌는 내용 */}
-    </BrowserRouter>
-  );
-};
-
-export default App;
-=======
-import Routes from './Routes';
-import React from 'react';
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import SearchSection from './SearchSection';
+import SearchPage from './pages/Home/SearchPage';
+import Header from './components/common/Header';
 
 function App() {
   return (
-        <Routes />
+    <Router>
+      <Header /> {/* 모든 페이지에서 항상 보이게 함 */}
+      <Routes>
+        <Route path="/" element={<SearchSection />} />
+        <Route path="/searchPage" element={<SearchPage />} />
+      </Routes>
+    </Router>
   );
 }
 

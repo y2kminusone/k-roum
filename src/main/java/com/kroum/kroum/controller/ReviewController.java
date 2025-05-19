@@ -91,14 +91,14 @@ public class ReviewController {
         List<ReviewDetailResponseDto> response = List.of(
                 new ReviewDetailResponseDto(
                         "경복궁",
-                        4,
+                        4.5,
                         "역사적인 분위기에서 산책하기 너무 좋아요.",
                         "2025-05-12",
                         "https://cdn.kroum.com/places/gyungbok.jpg"
                 ),
                 new ReviewDetailResponseDto(
                         "경복궁",
-                        3,
+                        4.0,
                         "야경이 예뻤어요. 낮보다 밤 추천!",
                         "2025-05-11",
                         "https://cdn.kroum.com/places/gyungbok.jpg"
@@ -153,14 +153,14 @@ public class ReviewController {
         List<ReviewDetailResponseDto> myDetailReviews = List.of(
                 new ReviewDetailResponseDto(
                         "경복궁",
-                        5,
+                        4.5,
                         "역사적인 분위기에서 산책하기 너무 좋아요.",
                         "2025-05-12",
                         "https://cdn.kroum.com/places/gyungbok.jpg"
                 ),
                 new ReviewDetailResponseDto(
                         "우리집",
-                        4,
+                        4.0,
                         "진짜 편해요!",
                         "2025-05-11",
                         "https://cdn.kroum.com/places/gyungbok.jpg"
