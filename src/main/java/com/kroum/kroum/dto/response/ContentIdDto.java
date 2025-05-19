@@ -13,4 +13,8 @@ import lombok.Setter;
 public class ContentIdDto {
 
     private Long contentId;
+
+    public ContentIdDto(String contentId) {
+        this.contentId = Long.parseLong(contentId);
+    }
 }

@@ -15,6 +15,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Map;
+import java.util.stream.Collectors;
 
 @Tag(name = "Place API", description = "장소 검색, 검색 결과 등 제공 해주는 컨트롤러")
 @RestController
@@ -109,4 +111,24 @@ public class PlaceController {
 
         return ResponseEntity.ok(places);
     }
+
+
+
+
+    @PostMapping("/test-direct")
+    public ResponseEntity<?> testDirect(@RequestBody List<Map<String, String>> contentIds) {
+        // contentId만 추출해서 Long으로 변환
+        List<ContentIdDto> ids = contentIds.stream()
+                .map(map -> Long.parseLong(map.get("contentId")))
+                .map(ContentIdDto::new)
+                .toList();
+
+        System.out.println("테스트 contentIds: " + ids);
+
+        // 실제 서비스 호출
+        List<PlaceSearchResponseDto> result = placeService.getPlacesByIds(ids);
+
+        return ResponseEntity.ok(result);
+    }
+
 }
