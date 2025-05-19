@@ -1,15 +1,16 @@
 from flask import Flask, request, jsonify
+from flask_cors import CORS
 from langchain_upstage import UpstageEmbeddings
 from langchain_community.vectorstores import Chroma
 from langchain.prompts import ChatPromptTemplate
 from langchain_google_genai import ChatGoogleGenerativeAI
 import os
 import dotenv
-import json
 
 dotenv.load_dotenv()
 
 app = Flask(__name__)
+CORS(app)  # 모든 도메인에서의 접근 허용
 
 # Embeddings 모델 설정
 us_model = UpstageEmbeddings(
@@ -41,7 +42,7 @@ llm = ChatGoogleGenerativeAI(
 def get_retriever(language_code):
     persist_directory = DB_DIRECTORIES.get(language_code, "database/kr_database")
     vector_store = Chroma(persist_directory=persist_directory, embedding_function=us_model)
-    return vector_store.as_retriever(search_type="mmr", search_kwargs={"k": 100, "fetch_k": 300, "lambda": 0.1})
+    return vector_store.as_retriever(search_type="mmr", search_kwargs={"k": 100, "fetch_k": 200, "lambda": 0.1})
 
 
 def llm_filter(query, pages):
@@ -53,7 +54,7 @@ def llm_filter(query, pages):
 
         # 페이지 목록을 문자열로 변환
         formatted_pages = "\n".join(
-            f"* {page.metadata.get('contentId', 'N/A')} - {page.page_content.split("\n")[0].replace('[제목] ', '').strip()}"
+            f"* {page.metadata.get('contentId', 'N/A')} - {page.page_content.split('\n')[0].replace('[제목] ', '').strip()}"
             for page in pages
         )
 
@@ -76,7 +77,7 @@ def llm_filter(query, pages):
         return []
 
 
-@app.route("/places/search", methods=["POST"])
+@app.route("/ai/search", methods=["POST"])
 def search_places():
     try:
         data = request.json
