@@ -6,7 +6,6 @@ import LanguageSelect from '../pages/LanguageSelect';
 const Router = () => {
   return (
     <Routes>
-      <Header />
       <Route path="/" element={<LandingPage />} />
       <Route path="/language" element={<LanguageSelect />} />
     </Routes>

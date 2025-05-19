@@ -1,3 +1,25 @@
+# --- Java 관련 무시 항목 (백엔드 개발용) ---
+*.class
+*.jar
+*.war
+*.nar
+*.ear
+*.zip
+*.tar.gz
+*.rar
+
+# Java 도구
+.mtj.tmp/
+
+# Java 에러 로그
+hs_err_pid*
+replay_pid*
+
+# 로그 파일
+*.log
+
+# --- Node.js / React / Tailwind CSS 관련 무시 항목 ---
+
 # See https://help.github.com/articles/ignoring-files/ for more about ignoring files.
 
 # dependencies
@@ -11,13 +33,14 @@
 # production
 /build
 
-# misc
-.DS_Store
+# 환경변수 파일 (보안 중요)
 .env.local
 .env.development.local
 .env.test.local
 .env.production.local
 
+# 기타 무시할 파일
+.DS_Store
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
