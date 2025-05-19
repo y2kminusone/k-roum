@@ -1,6 +1,9 @@
+// src/main.jsx
 import React from 'react';
 import ReactDOM from 'react-dom/client';
-import App from './App.jsx';
+import App from './App';
+import './i18n';
+import './styles/global.css'; // ✅ Tailwind 연결
 import '@styles/index.css';
 
 ReactDOM.createRoot(document.getElementById('root')).render(

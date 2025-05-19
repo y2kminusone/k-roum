@@ -1,18 +1,21 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { useTranslation } from 'react-i18next';
 
 const SearchSection = () => {
   const [searchQuery, setSearchQuery] = useState('');
-  const [languageCode, setLanguageCode] = useState('KO'); 
   const navigate = useNavigate();
+  const { t, i18n } = useTranslation();
 
   const handleSearch = async (e) => {
     e.preventDefault();
 
     if (!searchQuery.trim()) {
-      alert('검색어를 입력해주세요.');
+      alert(t('searchPrompt'));
       return;
     }
+
+    const currentLang = i18n.language.toUpperCase(); // ex) "ko" → "KO"
 
     try {
       const response = await fetch('http://localhost:8080/places/search', {
@@ -23,7 +26,7 @@ const SearchSection = () => {
         },
         body: JSON.stringify({
           query: searchQuery,
-          languageCode: languageCode,
+          languageCode: currentLang,
         }),
       });
 
@@ -55,7 +58,7 @@ const SearchSection = () => {
             </div>
             <input
               type="text"
-              placeholder="ex) I like KPOP. Please recommend a famous place!"
+              placeholder={t('searchPrompt')}
               className="h-full flex-grow px-4 text-[24px] text-[#919191] font-['LG_PC'] focus:outline-none rounded-[40px]"
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}

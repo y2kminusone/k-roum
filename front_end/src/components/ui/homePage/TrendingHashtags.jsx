@@ -1,16 +1,16 @@
 import React from 'react';
+import { useTranslation } from 'react-i18next';
 
 const TrendingHashtags = () => {
+  const { t } = useTranslation();
   const hashtags = [
-    'Tteokbokki',
-    'KPOP',
-    'BTS',
-    'bibimbap',
-    'amusementpark',
-    'cherry blossom',
-    'movie',
+    t('tteokbokki'),
+    t('kpop'),
+    t('bts'),
+    t('bibimbap'),
+    t('amusementpark'),
+    t('cherryblossom'),
   ];
-
   return (
     <div className="flex justify-center mb-12">
       <div className="w-full max-w-[609px]">
