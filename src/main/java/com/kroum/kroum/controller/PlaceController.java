@@ -1,10 +1,8 @@
 package com.kroum.kroum.controller;
 
 import com.kroum.kroum.dto.request.PlaceSearchRequestDto;
-import com.kroum.kroum.dto.response.PlaceDetailsResponseDto;
-import com.kroum.kroum.dto.response.PlaceDetailsWithRecommendationsResponseDto;
-import com.kroum.kroum.dto.response.PlaceSearchResponseDto;
-import com.kroum.kroum.dto.response.ReviewByPlaceIdResponseDto;
+import com.kroum.kroum.dto.response.*;
+import com.kroum.kroum.service.PlaceService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.ArraySchema;
 import io.swagger.v3.oas.annotations.media.Content;
@@ -12,6 +10,7 @@ import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.servlet.http.HttpSession;
+import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -19,8 +18,11 @@ import java.util.List;
 
 @Tag(name = "Place API", description = "장소 검색, 검색 결과 등 제공 해주는 컨트롤러")
 @RestController
+@RequiredArgsConstructor
 @RequestMapping("/places")
 public class PlaceController {
+
+    private final PlaceService placeService;
 
     @Operation(summary = "관광지 검색", description = "문장형으로 관광지를 검색함")
     @ApiResponse(
@@ -29,38 +31,11 @@ public class PlaceController {
             content = @Content(array = @ArraySchema(schema = @Schema(implementation = PlaceSearchResponseDto.class)))
     )
     @PostMapping("/search")
-    public List<PlaceSearchResponseDto> searchPlace(@RequestBody PlaceSearchRequestDto request) {
+    public ResponseEntity<List<PlaceSearchResponseDto>> searchPlace(@RequestBody PlaceSearchRequestDto request) {
+        List<ContentIdDto> ids = placeService.getRecommendedPlaceIds(request);
+        List<PlaceSearchResponseDto> places = placeService.getPlacesByIds(ids);
+        return ResponseEntity.ok(places);
 
-        /**
-         * 실제 구현은 아래와 같이 한다. 얘는 별도의 서비스 로직을 만들 필요가 없다.
-         * List<Long> ids = aiService.getRecommendedPlaceIds(request.getQuery(), request.getLanguageCode());
-         *
-         *     핵심 로직 위임
-         *     return placeService.getPlacesByIds(ids, request.getLanguageCode());
-         */
-
-        // 현재는 dto 리턴이지만, 나중에 ResponseEntity 리턴해서 상태 코드랑 헤더 제어할 수 있게 구현
-        // mock data 넣어서 체크
-        return List.of(
-                new PlaceSearchResponseDto(
-                        37.5665,
-                        126.9780,
-                        "https://cdn.kroum.com/images/gyungbok.jpg",
-                        "경복궁",
-                        "서울 도심 속 전통 궁궐",
-                        "서울특별시 종로구 사직로 161"
-                )
-                ,
-                new PlaceSearchResponseDto(
-                        58.5665,
-                        245.9780,
-                        "https://cdn.kroum.com/images/gyungbok.jpg",
-                        "장소명2",
-                        "설명2",
-                        "주소 2"
-                )
-
-        );
     }
 
     @Operation(summary = "장소 상세 통합 요청", description = "장소 클릭 시 상세 정보 + 리뷰 + 주변 장소 리스트 반환")
