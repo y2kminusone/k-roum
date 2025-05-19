@@ -20,15 +20,17 @@ replay_pid*
 
 # --- Node.js / React / Tailwind CSS 관련 무시 항목 ---
 
-# 의존성 폴더
+# See https://help.github.com/articles/ignoring-files/ for more about ignoring files.
+
+# dependencies
 /node_modules
 /.pnp
 .pnp.js
 
-# 테스트 커버리지 결과
+# testing
 /coverage
 
-# 프로덕션 빌드 결과
+# production
 /build
 
 # 환경변수 파일 (보안 중요)
