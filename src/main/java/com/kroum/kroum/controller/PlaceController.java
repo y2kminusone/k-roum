@@ -1,14 +1,16 @@
 package com.kroum.kroum.controller;
 
 import com.kroum.kroum.dto.request.PlaceSearchRequestDto;
-import com.kroum.kroum.dto.response.PlaceDetailsResponseDto;
-import com.kroum.kroum.dto.response.PlaceSearchResponseDto;
+import com.kroum.kroum.dto.response.*;
+import com.kroum.kroum.service.PlaceService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.ArraySchema;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import jakarta.servlet.http.HttpSession;
+import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -18,8 +20,11 @@ import java.util.stream.Collectors;
 
 @Tag(name = "Place API", description = "장소 검색, 검색 결과 등 제공 해주는 컨트롤러")
 @RestController
+@RequiredArgsConstructor
 @RequestMapping("/places")
 public class PlaceController {
+
+    private final PlaceService placeService;
 
     @Operation(summary = "관광지 검색", description = "문장형으로 관광지를 검색함")
     @ApiResponse(
@@ -28,62 +33,41 @@ public class PlaceController {
             content = @Content(array = @ArraySchema(schema = @Schema(implementation = PlaceSearchResponseDto.class)))
     )
     @PostMapping("/search")
-    public List<PlaceSearchResponseDto> searchPlace(@RequestBody PlaceSearchRequestDto request) {
+    public ResponseEntity<List<PlaceSearchResponseDto>> searchPlace(@RequestBody PlaceSearchRequestDto request) {
+        List<ContentIdDto> ids = placeService.getRecommendedPlaceIds(request);
+        List<PlaceSearchResponseDto> places = placeService.getPlacesByIds(ids);
+        return ResponseEntity.ok(places);
 
-        /**
-         * 실제 구현은 아래와 같이 한다. 얘는 별도의 서비스 로직을 만들 필요가 없다.
-         * List<Long> ids = aiService.getRecommendedPlaceIds(request.getQuery(), request.getLanguageCode());
-         *
-         *     핵심 로직 위임
-         *     return placeService.getPlacesByIds(ids, request.getLanguageCode());
-         */
-
-        // 현재는 dto 리턴이지만, 나중에 ResponseEntity 리턴해서 상태 코드랑 헤더 제어할 수 있게 구현
-        // mock data 넣어서 체크
-        return List.of(
-                new PlaceSearchResponseDto(
-                        37.5665,
-                        126.9780,
-                        "https://cdn.kroum.com/images/gyungbok.jpg",
-                        List.of(
-                                "https://cdn.kroum.com/images/gyungbok_1.jpg",
-                                "https://cdn.kroum.com/images/gyungbok_2.jpg"
-                        ),
-                        "경복궁",
-                        "서울 도심 속 전통 궁궐",
-                        "서울특별시 종로구 사직로 161"
-                )
-                ,
-                new PlaceSearchResponseDto(
-                        58.5665,
-                        245.9780,
-                        "https://cdn.kroum.com/images/gyungbok.jpg",
-                        List.of(
-                                "https://cdn.kroum.com/images/gyungbok_1.jpg",
-                                "https://cdn.kroum.com/images/gyungbok_2.jpg"
-                        ),
-                        "장소명2",
-                        "설명2",
-                        "주소 2"
-                )
-
-        );
     }
 
-    @Operation(summary = "상세 정보 조회 요청", description = "검색 결과에서 특정 장소 클릭")
-    @ApiResponse( // 여러 실패 상태 코드는 나중에 따로 추가
+    @Operation(summary = "장소 상세 통합 요청", description = "장소 클릭 시 상세 정보 + 리뷰 + 주변 장소 리스트 반환")
+    @ApiResponse(
             responseCode = "200",
-            description = "성공 시 장소 상세 정보 반환",
-            content = @Content(schema = @Schema(implementation = PlaceDetailsResponseDto.class)
-            )
+            description = "성공 시 통합 상세 정보 반환",
+            content = @Content(schema = @Schema(implementation = PlaceDetailsWithRecommendationsResponseDto.class))
     )
-    @GetMapping("/{placeId}")
-    public ResponseEntity<PlaceDetailsResponseDto> getPlaceDetails(@PathVariable Long placeId,
-                                                                   @RequestParam String languageCode) {
+    @GetMapping("/{placeId}/with-everything")
+    public ResponseEntity<PlaceDetailsWithRecommendationsResponseDto> getPlaceDetailsWithEverything(
+            @PathVariable Long placeId,
+            @RequestParam String languageCode,
+            HttpSession session
+    ) {
+        /*// 상세 정보(리뷰 갯수, 리뷰 평점, 찜 갯수, 내 찜 여부)
+        PlaceDetailsResponseDto details = placeService.getPlaceDetails(placeId, languageCode, user);
 
-        // 서비스 로직 구현하기 placeId, languageCode로 DB에서 데이터 찾아오면 됨
-        return ResponseEntity.ok(new PlaceDetailsResponseDto(41, 4.5, 32, true));
+        // 타인의 리뷰 리스트 (타인 닉네임, 작성일자, 별점, 텍스트)
+        List<ReviewByPlaceIdResponseDto> reviews = reviewService.getReviewsByPlaceId(placeId);
+
+        // 추천 장소 리스트 (추천 장소 관련 데이터들)
+        List<PlaceSearchResponseDto> recommendations = placeService.getRelatedPlaces(placeId, languageCode);
+*/
+        // 응답 객체 생성
+        /*PlaceDetailsWithRecommendationsResponseDto response =
+                new PlaceDetailsWithRecommendationsResponseDto(details, reviews, recommendations);*/
+
+        return ResponseEntity.ok(null);//(response);
     }
+
 
     @Operation(summary = "추천 장소 리스트 요청", description = "백엔드 -> api만 도는 내부 api")
     @ApiResponse(
@@ -108,10 +92,7 @@ public class PlaceController {
                         37.5665,
                         126.9780,
                         "https://cdn.kroum.com/images/gyungbok.jpg",
-                        List.of(
-                                "https://cdn.kroum.com/images/gyungbok_1.jpg",
-                                "https://cdn.kroum.com/images/gyungbok_2.jpg"
-                        ),
+
                         "경복궁",
                         "서울 도심 속 전통 궁궐",
                         "서울특별시 종로구 사직로 161"
@@ -121,10 +102,7 @@ public class PlaceController {
                         58.5665,
                         245.9780,
                         "https://cdn.kroum.com/images/gyungbok.jpg",
-                        List.of(
-                                "https://cdn.kroum.com/images/gyungbok_1.jpg",
-                                "https://cdn.kroum.com/images/gyungbok_2.jpg"
-                        ),
+
                         "장소명2",
                         "설명2",
                         "주소 2"
@@ -134,49 +112,23 @@ public class PlaceController {
         return ResponseEntity.ok(places);
     }
 
-    @Operation(summary = "주변 장소 리스트 요청", description = "유저가 추천 장소 중 특정 장소 클릭 후 선택 -> 주변 장소 리스트 출력")
-    @ApiResponse(
-            // 응답코드 분기는 나중에 구현
-            responseCode = "200",
-            description = "성공시 주변 장소 리스트 정보 반환",
-            content = @Content(array = @ArraySchema(schema = @Schema(implementation = PlaceDetailsResponseDto.class)))
-    )
-    @GetMapping("/{placeId}/related")
-    public ResponseEntity<List<PlaceSearchResponseDto>> getRelatedPlacesById(
-            @PathVariable Long placeId,
-            @RequestParam String languageCode) {
 
-            // 서비스 로직은 id로 해당 장소의 위도 경도를 갖고와서
-            // bounding box를 적용해서 그 범위에 해당하는 주변 장소 리스트를 모두 가져오도록 한다.
-            //컨트롤러는 이를 리턴한다
-            List<PlaceSearchResponseDto> relatedPlaces = List.of(
-                    new PlaceSearchResponseDto(
-                            37.5665,
-                            126.9780,
-                            "https://cdn.kroum.com/images/gyungbok.jpg",
-                            List.of(
-                                    "https://cdn.kroum.com/images/gyungbok_1.jpg",
-                                    "https://cdn.kroum.com/images/gyungbok_2.jpg"
-                            ),
-                            "경복궁",
-                            "서울 도심 속 전통 궁궐",
-                            "서울특별시 종로구 사직로 161"
-                    )
-                    ,
-                    new PlaceSearchResponseDto(
-                            58.5665,
-                            245.9780,
-                            "https://cdn.kroum.com/images/gyungbok.jpg",
-                            List.of(
-                                    "https://cdn.kroum.com/images/gyungbok_1.jpg",
-                                    "https://cdn.kroum.com/images/gyungbok_2.jpg"
-                            ),
-                            "장소명2",
-                            "설명2",
-                            "주소 2"
-                    )
-            );
 
-            return ResponseEntity.ok(relatedPlaces);
+
+    @PostMapping("/test-direct")
+    public ResponseEntity<?> testDirect(@RequestBody List<Map<String, String>> contentIds) {
+        // contentId만 추출해서 Long으로 변환
+        List<ContentIdDto> ids = contentIds.stream()
+                .map(map -> Long.parseLong(map.get("contentId")))
+                .map(ContentIdDto::new)
+                .toList();
+
+        System.out.println("테스트 contentIds: " + ids);
+
+        // 실제 서비스 호출
+        List<PlaceSearchResponseDto> result = placeService.getPlacesByIds(ids);
+
+        return ResponseEntity.ok(result);
     }
+
 }
